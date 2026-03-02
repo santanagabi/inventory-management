@@ -12,4 +12,11 @@ First, run the development server:
 npm run dev
 ```
 
+Data base using prisma and postgresql.
+neon and stack auth
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Tela de dashboard:![alt text](image-1.png)
+
+Tela de inventário:![alt text](image.png)
