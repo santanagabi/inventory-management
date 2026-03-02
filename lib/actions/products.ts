@@ -10,7 +10,7 @@ const ProductSchema = z.object({
   price: z.coerce.number().nonnegative("Price must be non-negative"),
   quantity: z.coerce.number().int().min(0, "Quantity must be non-negative"),
   sku: z.string().optional(),
-  lowStockAt: z.coerce.number().int().min(0).optional(),
+  lowStock: z.coerce.number().int().min(0).optional(),
 });
 
 export async function deleteProduct(formData: FormData) {
@@ -30,7 +30,7 @@ export async function createProduct(formData: FormData) {
     price: formData.get("price"),
     quantity: formData.get("quantity"),
     sku: formData.get("sku") || undefined,
-    lowStockAt: formData.get("lowStockAt") || undefined,
+    lowStock: formData.get("lowStock") || undefined,
   });
 
   if (!parsed.success) {
@@ -41,8 +41,10 @@ export async function createProduct(formData: FormData) {
     await prisma.product.create({
       data: { ...parsed.data, userId: user.id },
     });
-    redirect("/inventory");
+    return { success: true };
   } catch (error) {
-    throw new Error("Failed to create product.");
+    console.error("------------:", error);
+    return { success: false, error: "Failed to create product." };
   }
 }
+
